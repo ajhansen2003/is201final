@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="gallery-page">
+    <div class="page">
+        <div class="page-header">
+            <div class="header-copy">
+                <h1>Food Mascot Gallery</h1>
+                <p>Click the buttons to move through the carousel.</p>
+            </div>
+            <div class="page-nav">
+                <a class="page-link" href="../index.html">Home</a>
+                <a class="page-link" href="gallery.html">Gallery</a>
+                <a class="page-link" href="aboutme.html">About Me</a>
+            </div>
+        </div>
+
+        <div class="page-main">
+            <section class="carousel" aria-label="Image carousel">
+                <div class="slides" id="slides">
+                    <figure class="slide">
+                        <img src="https://www.chick-fil-a.com/wp-content/uploads/sites/2/2025/07/cows-mascot-full-page.png" alt="Chick-fil-A cow mascot">
+                        <figcaption class="caption">Chick-fil-A Cow</figcaption>
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://play-lh.googleusercontent.com/wZLp5dcm1UrT-ajNv3vPnGsp905iSXtxXfmMAE521IBksSeGnAE3Z-wxoXB37ntvdteI" alt="Cafe Rio app icon">
+                        <figcaption class="caption">Cafe Rio</figcaption>
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=100064556327531" alt="Costa Vida image">
+                        <figcaption class="caption">Costa Vida</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <div class="controls">
+                <div class="buttons">
+                    <button type="button" id="prev">Previous</button>
+                    <button type="button" id="next">Next</button>
+                </div>
+                <div class="dots" id="dots" aria-label="Carousel navigation"></div>
+            </div>
+        </div>
+
+        <div class="page-footer">Gallery Page</div>
+    </div>
+
+    <script>
+        const slides = document.getElementById("slides");
+        const slideCount = slides.children.length;
+        const dotsContainer = document.getElementById("dots");
+        const nextButton = document.getElementById("next");
+        const prevButton = document.getElementById("prev");
+        let currentIndex = 0;
+
+        function renderDots() {
+            dotsContainer.innerHTML = "";
+
+            for (let i = 0; i < slideCount; i += 1) {
+                const dot = document.createElement("button");
+                dot.type = "button";
+                dot.className = i === currentIndex ? "dot active" : "dot";
+                dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
+                dot.addEventListener("click", () => {
+                    currentIndex = i;
+                    updateCarousel();
+                });
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateCarousel() {
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+            renderDots();
+        }
+
+        nextButton.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % slideCount;
+            updateCarousel();
+        });
+
+        prevButton.addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+            updateCarousel();
+        });
+
+        updateCarousel();
+    </script>
+</body>
+</html>
